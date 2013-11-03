@@ -10,7 +10,7 @@ git log \
     --numstat \
     --format='%H' \
     $@ | \
-    perl -lawne 'BEGIN{};
+    perl -lawne '
         if (defined $F[1]) {
             print qq#{"insertions": "$F[0]", "deletions": "$F[1]", "path": "$F[2]"},#
         } elsif (defined $F[0]) {
