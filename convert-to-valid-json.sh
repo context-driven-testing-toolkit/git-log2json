@@ -2,4 +2,5 @@
 # output of the JSON log format:
 
 git log-json | \
-    perl -pe 'BEGIN{print "var git_log = {"}; s/}/},/; END{print "};\n"}'
+    perl -pe 'BEGIN{print "{"}; s/}/},/; END{print "}\n"}'  | \
+    perl -pe 's/},}/}}/'
