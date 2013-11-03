@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-# OPTIONAL: use this stand-alone shell script to produce a JSON object with information similar to git --stat.
-#           You can then easily cross-reference or merge this with the JSON git log, since both are keyed on the commit hash, which is unique.
+# OPTIONAL: use this stand-alone shell script to produce a JSON object
+# with information similar to git --stat.
+#
+# You can then easily cross-reference or merge this with the JSON git
+# log, since both are keyed on the commit hash, which is unique.
 
 git log \
     --numstat \
