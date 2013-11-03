@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# OPTIONAL: use this stand-alone shell script to produce a JSON object with information similar to git --stat
+
 git log \
     --numstat \
     --format='%H' \
