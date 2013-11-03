@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Use this one-liner to produce a JavaScript object literal from the
-# output of the JSON log format:
+# Use this one-liner to produce a JSON object literal from the
+# output of the Git JSON log format:
 
 git log-json | \
     perl -pe 'BEGIN{print "{"}; s/}/},/; END{print "}\n"}'  | \
