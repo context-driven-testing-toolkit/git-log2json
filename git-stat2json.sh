@@ -21,5 +21,4 @@ git log \
     perl -wpe 'BEGIN{print "{"}; END{print "}"}' | \
     tr '\n' ' ' | \
     perl -wpe 's#(]|}),\s*(]|})#$1$2#g' | \
-    perl -wpe 's#,\s*?}$#}#' | \
-    jsonlint -s
+    perl -wpe 's#,\s*?}$#}#'
