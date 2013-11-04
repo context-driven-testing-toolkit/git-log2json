@@ -3,9 +3,8 @@
  * created by the two shell scripts above
  */
 
-var ___, gitLog, lstat;
+var gitLog, lstat;
 
-___ = require('underscore');
 gitLog = require('git-log.json');
 lstat = require('git-stat.json');
 
