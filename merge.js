@@ -8,7 +8,6 @@ var gitLog, lstat;
 gitLog = require('git-log.json');
 lstat = require('git-stat.json');
 
-/* merge the two data structures */
 gitLog.map(function(o){
     o.stat = lstat[o.commit];
 });
