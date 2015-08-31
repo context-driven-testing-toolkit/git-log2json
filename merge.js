@@ -9,5 +9,5 @@ gitLog = require('git-log.json');
 lstat = require('git-stat.json');
 
 gitLog.map(function(o){
-    o.stat = lstat[o.commit];
+    o.paths = lstat[o.commit];
 });
