@@ -2,4 +2,4 @@
 
 Convert Git logs to JSON.
 
-This repository is a fork of https://gist.github.com/textarcana/1306223
+This repository is the maintained fork of this gist from 2011: https://gist.github.com/textarcana/1306223
