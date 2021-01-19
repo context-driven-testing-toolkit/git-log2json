@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
-set -o errexit -o nounset -o pipefail
-
 # Use this one-liner to produce a JSON literal from the Git log:
 
 git log \
+    --date=iso8601-strict \
     --pretty=format:'{%n  "commit": "%H",%n  "author": "%aN <%aE>",%n  "date": "%ad",%n  "message": "%f"%n},' \
     "$@" | \
-    perl -lwpe 'BEGIN{print "["}; END{print "]\n"}' | \
-    perl -lwpe 's/},]/}]/' | \
-    perl -lwpe 's{\\}{\\\\}'
+    perl -pe 'BEGIN{print "["}; END{print "]\n"}' | \
+    perl -pe 's/},]/}]/' | \
+    perl -pe 's{\\}{\\\\}g'
