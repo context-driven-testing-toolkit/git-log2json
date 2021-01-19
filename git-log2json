@@ -6,7 +6,7 @@ repository=$(git remote -v | head -n1 | perl -lwne 'm{\b([^/:]+/[^/]+).git\s} an
 
 git log \
     --date=iso8601-strict \
-    --pretty=format:"{%n  \"commit\": \"%H\",%n  \"author\": \"%aN <%aE>\",%n  \"date\": \"%ad\",%n  \"message\": \"%f\",%n  \"repo\": \"$repository\"%n}," \
+    --pretty=format:"{%n  \"commit\": \"%H\",%n  \"author\": \"%aN <%aE>\",%n  \"date\": \"%ad\",%n  \"timestamp\": \"%at\",%n  \"message\": \"%f\",%n  \"repo\": \"$repository\"%n}," \
     "$@" | \
     perl -pe 'BEGIN{print "["}; END{print "]\n"}' | \
     perl -pe 's/},]/}]/' | \
