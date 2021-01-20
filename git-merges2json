@@ -8,14 +8,18 @@
 #
 # Git puts the merge commit first so the merge commit will be first in
 # each of the returned sub-arrays.
+#
+# The commits are returned in date order so the oldest commit in the
+# merge is always the last item in each of the returned sub-arrays.
 
 # shellcheck disable=SC1004,SC2016
 
 git log \
     --merges \
     --first-parent \
+    --date-order \
     --format=%h "$@" \
     | xargs -I@ \
-            bash -c 'hash=@; git log2json ${hash}^..${hash} \
+            bash -c 'hash=@; git log2json --date-order ${hash}^..${hash} \
                          | jq -e ".[0].is_merge = true"' \
     | jq --slurp -e '.'
