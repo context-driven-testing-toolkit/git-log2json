@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
 
 # Use this stand-alone shell script to produce a JSON object with
-# information similar to git log --merges.
+# information similar to git log --merges, where merges are
+# represented as arryays of commits.
 #
-# You can then easily cross-reference or merge this with the JSON git
-# log, since both are keyed on the commit hash, which is unique.
+# Merge commits have an is_merge property that is always set to true.
+#
+# Git puts the merge commit first so the merge commit will be first in
+# each of the returned sub-arrays.
 
-repository=$(git remote -v | head -n1 | perl -lwne 'm{\b([^/:]+/[^/]+).git\s} and print $1')
+# shellcheck disable=SC1004,SC2016
 
 git log \
     --merges \
-    --date=iso8601-strict \
-    --pretty=format:"{%n  \"commit\": \"%H\",%n  \"author\": \"%aN <%aE>\",%n  \"date\": \"%ad\",%n  \"timestamp\": %at,%n  \"message\": \"%f\",%n  \"repo\": \"$repository\",%n  \"is_merge\": true}," \
-    "$@" | \
-    perl -pe 'BEGIN{print "["}; END{print "]\n"}' | \
-    perl -pe 's/},]/}]/' | \
-    perl -pe 's{\\}{\\\\}g'
+    --first-parent \
+    --format=%h "$@" \
+    | xargs -I@ \
+            bash -c 'hash=@; git log2json ${hash}^..${hash} \
+                         | jq -e ".[0].is_merge = true"' \
+    | jq --slurp -e '.'
