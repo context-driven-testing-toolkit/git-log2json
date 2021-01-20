@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Use this stand-alone shell script to produce a JSON object with
+# information similar to git log --merges.
+#
+# You can then easily cross-reference or merge this with the JSON git
+# log, since both are keyed on the commit hash, which is unique.
+
+repository=$(git remote -v | head -n1 | perl -lwne 'm{\b([^/:]+/[^/]+).git\s} and print $1')
+
+git log \
+    --merges \
+    --date=iso8601-strict \
+    --pretty=format:"{%n  \"commit\": \"%H\",%n  \"author\": \"%aN <%aE>\",%n  \"date\": \"%ad\",%n  \"timestamp\": %at,%n  \"message\": \"%f\",%n  \"repo\": \"$repository\",%n  \"is_merge\": true}," \
+    "$@" | \
+    perl -pe 'BEGIN{print "["}; END{print "]\n"}' | \
+    perl -pe 's/},]/}]/' | \
+    perl -pe 's{\\}{\\\\}g'
